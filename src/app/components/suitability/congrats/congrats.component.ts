@@ -1,4 +1,4 @@
-import { SuitabilityService } from '../../services/suitability.service';
+import { SuitabilityService } from '../../../services/suitability.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
