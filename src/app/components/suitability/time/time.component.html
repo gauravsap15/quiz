@@ -1,0 +1,26 @@
+<div class="container main">
+    <h5 class="mb-4">{{ title }}</h5>
+    <h6 *ngIf="isError" class="form-text text-danger mb-4">{{ errorMessage }}</h6>
+    <form [formGroup]="timeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="hasSaving">Do you have enough saving for 4year:</label>
+            <div>
+            <input id="yes" type="radio" value="yes" name="hasSaving" formControlName="hasSaving">
+            <label class="ml-1" for="yes">Yes</label>
+        </div>
+
+        <div>
+            <input id="no" type="radio" value="no" name="hasSaving" formControlName="hasSaving">
+            <label class="ml-1" for="no">No</label>
+        </div>
+            
+            <div *ngIf="getFormData.hasSaving.touched && getFormData.hasSaving.invalid" class="alert alert-danger">
+                Name is required field.
+            </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+            <a class="btn btn-secondary" [routerLink]="['/risk',applicationId]">Back</a>
+            <button class="btn btn-primary" type="submit" [disabled]="!timeForm.valid">Submit</button>
+        </div>
+    </form>
+</div>

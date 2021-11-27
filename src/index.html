@@ -1,13 +1,29 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>App</title>
+  <title>Myapp</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .main {
+      min-height: calc(100vh - 56px - 56px - 26px);
+    }
+    .form-control.ng-invalid.ng-touched {
+      border: 1px solid red;
+      color: red;
+    }
+    .form-control.ng-invalid.ng-touched::placeholder {
+      color: red;
+    }
+  </style>
 </head>
-<body>
+
+<body class="d-flex flex-column h-100">
   <app-root></app-root>
 </body>
+
 </html>

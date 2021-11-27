@@ -1,0 +1,49 @@
+<div class="container main">
+  <h5 class="mb-4">{{title}}</h5>
+  <h6 *ngIf="isError" class="form-text text-danger mb-4">{{errorMessage}}</h6>
+  <form [formGroup]="riskForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        id="email"
+        placeholder="name@example.com"
+        formControlName="email"
+      />
+      <div
+        *ngIf="getFormData.email.touched && getFormData.email.invalid"
+        class="form-text text-danger"
+      >
+      <!-- <div *ngIf="getFormData.email.errors.required"> This is required.</div>
+      <div *ngIf="getFormData.email.errors.email"> Please enter valid email.</div> -->
+      This is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="investmentYears">Investment years</label>
+      <select
+        class="form-control"
+        id="investmentYears"
+        formControlName="investmentYears"
+      >
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      <div
+        *ngIf="getFormData.investmentYears.touched && getFormData.investmentYears.invalid"
+        class="form-text text-danger"
+      >
+        This is required.
+      </div>
+    </div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+      <a class="btn btn-secondary" [routerLink]="['/liquidity',applicationId]">Back</a>
+      <button class="btn btn-primary" type="submit" [disabled]="!riskForm.valid">Next</button>
+    </div>
+  </form>
+</div>
