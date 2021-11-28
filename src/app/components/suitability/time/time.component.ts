@@ -1,7 +1,8 @@
-import { SuitabilityService } from '../../../services/suitability.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LocalStorageService } from './../../../services/local-store.service';
+import { SuitabilityService } from '../../../services/suitability.service';
 
 @Component({
   selector: 'app-time',
@@ -16,9 +17,14 @@ export class TimeComponent implements OnInit {
   isError = false;
   errorMessage = 'Something went wrong, please again try later!';
 
+  //set useLocalStorage as true to use browser's local session 
+  //set useLocalStorage as false to local API server 
+  useLocalStorage = true;
+
   constructor(
     //dependency injection
     private suitabilityService: SuitabilityService,
+    private localStorageService: LocalStorageService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder
@@ -33,21 +39,34 @@ export class TimeComponent implements OnInit {
       hasSaving: ['', Validators.required],
     });
 
-    //call the get application data service to fill the form on back or page load
-    this.suitabilityService.getAppData(this.applicationId).subscribe(
-      (r) => {
-        //on api success if form data exist then set the value of form fields
-        if (r.time) {
-          this.timeForm.setValue({
-            hasSaving: r.time.hasSaving,
-          });
-        }
-      },
-      (error) => {
-        //if api failed called generic error method
-        this.onError(error);
+    //get the application data to fill the form on back or page load
+    if ( this.useLocalStorage) {
+      const data = this.localStorageService.get(this.applicationId)
+      if (data && data.time) {
+        this.setFormFields(data.time)
       }
-    );
+    }
+    else {
+      this.suitabilityService.getAppData(this.applicationId)
+        .subscribe((data) => {
+          //on api success if form data exist then set the value of form fields
+          if (data && data.time) {
+            this.setFormFields(data.time)
+          }
+        },
+        (error) => {
+          //if api failed called generic error method
+          this.onError(error)
+        }
+      );
+    }
+  }
+
+  //set the value of form fields
+  setFormFields(time: any): void {
+    this.timeForm.setValue({
+      hasSaving: time.hasSaving,
+    });
   }
 
   //generic error function
@@ -59,13 +78,20 @@ export class TimeComponent implements OnInit {
   //function called on form submit
   onSubmit(): void {
     //create payload which need to be submit via API
-    const payload = {
+    let payload = {
       time: { ...this.timeForm.value },
     };
 
-    //called API service with payload & application id
-    this.suitabilityService.callTimeApi(payload, this.applicationId).subscribe(
-      (r) => {
+    if (this.useLocalStorage) {
+      //store in browser localStorage with application id as key and payload as value
+      this.localStorageService.set(this.applicationId, payload);
+    }
+    //call API service with payload & application id 
+    if (this.useLocalStorage) { //Send ALL forms data
+      payload = this.localStorageService.get(this.applicationId);
+    }
+    this.suitabilityService.callTimeApi(this.applicationId, payload)
+      .subscribe((r) => {
         //on success redirect to next page
         this.router.navigate(['congrats', this.applicationId]);
       },

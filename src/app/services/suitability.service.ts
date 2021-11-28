@@ -6,21 +6,21 @@ import { Observable } from 'rxjs';
 
 export class SuitabilityService {
   constructor(private httpClient: HttpClient) { }
-  private apiURL = 'http://localhost:5000/application'
+  private apiURL = 'http://localhost:5000/application';
 
-  getAppData(id:any): Observable<any> {
-    return this.httpClient.get<any>(`${this.apiURL}/${id}`)
+  getAppData(applicationId: any): Observable<any> {
+    return this.httpClient.get<any>(`${this.apiURL}/${applicationId}`);
   }
 
-  callTimeApi(payload:any, applicationId:string): Observable<any> {
-    return this.httpClient.patch<any>(`${this.apiURL}/${applicationId}`, payload);
+  callTimeApi(applicationId: string, payload: any): Observable<any> {
+    return this.httpClient.patch<any>(`${this.apiURL}/${applicationId}`,payload);
   }
 
-  callLiquidityApi(payload:any, applicationId:string): Observable<any> {
-    return this.httpClient.patch<any>(`${this.apiURL}/${applicationId}`, payload);
+  callLiquidityApi(applicationId: string, payload: any): Observable<any> {
+    return this.httpClient.patch<any>(`${this.apiURL}/${applicationId}`,payload);
   }
 
-  callRiskApi(payload:any, applicationId:string): Observable<any> {
-    return this.httpClient.patch<any>(`${this.apiURL}/${applicationId}`, payload);
+  callRiskApi(applicationId: string, payload: any): Observable<any> {
+    return this.httpClient.patch<any>(`${this.apiURL}/${applicationId}`,payload);
   }
 }
