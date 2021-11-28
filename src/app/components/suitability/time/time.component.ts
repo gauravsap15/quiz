@@ -88,7 +88,7 @@ export class TimeComponent implements OnInit {
     }
     //call API service with payload & application id 
     if (this.useLocalStorage) { //Send ALL forms data
-      payload = this.localStorageService.get(this.applicationId);
+      payload = {...this.localStorageService.get(this.applicationId), processId: this.applicationId};
     }
     this.suitabilityService.callTimeApi(this.applicationId, payload)
       .subscribe((r) => {
