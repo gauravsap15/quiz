@@ -10,7 +10,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RiskComponent } from './components/suitability/risk/risk.component';
 import { LiquidityComponent } from './components/suitability/liquidity/liquidity.component';
 import { TimeComponent } from './components/suitability/time/time.component';
-import { ButtonComponent } from './components/button/button.component';
 import { CongratsComponent } from './components/suitability/congrats/congrats.component';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { CongratsComponent } from './components/suitability/congrats/congrats.co
     RiskComponent,
     LiquidityComponent,
     TimeComponent,
-    ButtonComponent,
     CongratsComponent
   ],
   imports: [

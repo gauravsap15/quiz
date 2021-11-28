@@ -1,6 +1,6 @@
 import { SuitabilityService } from '../../../services/suitability.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -9,63 +9,70 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./time.component.scss'],
 })
 export class TimeComponent implements OnInit {
-  applicationId = '';
-  constructor(
-    private suitabilityService: SuitabilityService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {
-    this.applicationId = this.activatedRoute.snapshot.params.id;
-  }
-
+  //declare variables & properties
+  applicationId: string = '';
+  timeForm!: FormGroup;
   title = 'Time Section';
   isError = false;
   errorMessage = 'Something went wrong, please again try later!';
 
-  timeForm = new FormGroup({
-    hasSaving: new FormControl('', Validators.required),
-  });
-
-  get getFormData() {
-    return this.timeForm.controls;
-  }
+  constructor(
+    //dependency injection
+    private suitabilityService: SuitabilityService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
+    //get application id on the page load
+    this.applicationId = this.activatedRoute.snapshot.params.id;
+
+    //initialize the form with initial value and required validations
+    this.timeForm = this.fb.group({
+      hasSaving: ['', Validators.required],
+    });
+
+    //call the get application data service to fill the form on back or page load
     this.suitabilityService.getAppData(this.applicationId).subscribe(
       (r) => {
-        if(r.time) {
+        //on api success if form data exist then set the value of form fields
+        if (r.time) {
           this.timeForm.setValue({
-            hasSaving: r.time && r.time.hasSaving,
+            hasSaving: r.time.hasSaving,
           });
         }
       },
       (error) => {
-        this.isError = true;
-        console.log('error===', error);
+        //if api failed called generic error method
+        this.onError(error);
       }
     );
   }
 
+  //generic error function
+  onError(error: any): void {
+    this.isError = true;
+    console.log('error====', error);
+  }
+
+  //function called on form submit
   onSubmit(): void {
-    if (this.timeForm.status === 'INVALID') {
-      alert('please fill up the required fields');
-      return;
-    }
+    //create payload which need to be submit via API
     const payload = {
-      time: {
-        hasSaving: this.timeForm.value.hasSaving,
-      },
-      applicationId: this.applicationId,
+      time: { ...this.timeForm.value },
     };
-    this.suitabilityService.callTimeApi(payload).subscribe(
+
+    //called API service with payload & application id
+    this.suitabilityService.callTimeApi(payload, this.applicationId).subscribe(
       (r) => {
+        //on success redirect to next page
         this.router.navigate(['congrats', this.applicationId]);
       },
       (error) => {
-        this.isError = true;
-        console.log('error===', error);
+        //on error called error method
+        this.onError(error);
       }
     );
   }
 }
-

@@ -31,7 +31,19 @@
       "id": 1243
     },
     {
-      "id": 1244
+      "id": 1244,
+      "liquidity": {
+        "firstName": "aa",
+        "lastName": "bb",
+        "liquidityAmount": "1234"
+      },
+      "risk": {
+        "email": "admin@gmail.com",
+        "investmentYears": "3"
+      },
+      "time": {
+        "hasSaving": "yes"
+      }
     }
   ]
 }

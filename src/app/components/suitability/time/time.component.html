@@ -3,18 +3,17 @@
     <h6 *ngIf="isError" class="form-text text-danger mb-4">{{ errorMessage }}</h6>
     <form [formGroup]="timeForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label for="hasSaving">Do you have enough saving for 4year:</label>
+            <label for="hasSaving">Do you want to open investment account? </label>
             <div>
-            <input id="yes" type="radio" value="yes" name="hasSaving" formControlName="hasSaving">
-            <label class="ml-1" for="yes">Yes</label>
-        </div>
-
-        <div>
-            <input id="no" type="radio" value="no" name="hasSaving" formControlName="hasSaving">
-            <label class="ml-1" for="no">No</label>
-        </div>
-            
-            <div *ngIf="getFormData.hasSaving.touched && getFormData.hasSaving.invalid" class="alert alert-danger">
+                <input id="yes" type="radio" value="yes" name="hasSaving" formControlName="hasSaving">
+                <label class="ml-1" for="yes">Yes</label>
+            </div>
+            <div>
+                <input id="no" type="radio" value="no" name="hasSaving" formControlName="hasSaving">
+                <label class="ml-1" for="no">No</label>
+            </div>
+            <div *ngIf="timeForm.get('hasSaving')?.touched && timeForm.get('hasSaving')?.invalid"
+                class="alert alert-danger">
                 Name is required field.
             </div>
         </div>

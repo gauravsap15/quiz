@@ -9,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CongratsComponent implements OnInit {
   applicationId = '';
-  isError = false;
   name = '';
 
   constructor(
@@ -20,18 +19,19 @@ export class CongratsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.suitabilityService.getAppData(this.applicationId).subscribe(
-      (r) => {
+    //call the get application data service to get the user name on page load
+    this.suitabilityService.getAppData(this.applicationId)
+    .subscribe((r) => {
+        //on api success read the data for user name
         if(r) {
           this.name = `${r.liquidity.firstName} ${r.liquidity.lastName}`;
         }
       },
       (error) => {
-        this.isError = true;
-        console.log('error===', error);
+        //if api failed ignore the error and not show the user name
+        console.log('error====', error);
       }
     );
   }
-
 
 }

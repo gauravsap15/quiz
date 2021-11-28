@@ -12,15 +12,15 @@ export class SuitabilityService {
     return this.httpClient.get<any>(`${this.apiURL}/${id}`)
   }
 
-  callTimeApi(payload:any): Observable<any> {
-    return this.httpClient.patch<any>(`${this.apiURL}/${payload.applicationId}`, payload)
+  callTimeApi(payload:any, applicationId:string): Observable<any> {
+    return this.httpClient.patch<any>(`${this.apiURL}/${applicationId}`, payload);
   }
 
-  callLiquidityApi(payload:any): Observable<any> {
-    return this.httpClient.patch<any>(`${this.apiURL}/${payload.applicationId}`, payload);
+  callLiquidityApi(payload:any, applicationId:string): Observable<any> {
+    return this.httpClient.patch<any>(`${this.apiURL}/${applicationId}`, payload);
   }
 
-  callRiskApi(payload:any): Observable<any> {
-    return this.httpClient.patch<any>(`${this.apiURL}/${payload.applicationId}`, payload)
+  callRiskApi(payload:any, applicationId:string): Observable<any> {
+    return this.httpClient.patch<any>(`${this.apiURL}/${applicationId}`, payload);
   }
 }
