@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+.main {
+  min-height: calc(100vh - 56px - 56px - 26px);
+}
+.form-control.ng-invalid.ng-touched {
+  border: 1px solid red;
+  color: red;
+}
