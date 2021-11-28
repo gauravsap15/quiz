@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from './../../../services/local-store.service';
 import { SuitabilityService } from '../../../services/suitability.service';
@@ -12,7 +12,7 @@ import { SuitabilityService } from '../../../services/suitability.service';
 export class TimeComponent implements OnInit {
   //declare variables & properties
   applicationId: string = '';
-  timeForm!: FormGroup;
+  formData: any = {};
   title = 'Time Section';
   isError = false;
   errorMessage = 'Something went wrong, please again try later!';
@@ -33,11 +33,6 @@ export class TimeComponent implements OnInit {
   ngOnInit(): void {
     //get application id on the page load
     this.applicationId = this.activatedRoute.snapshot.params.id;
-
-    //initialize the form with initial value and required validations
-    this.timeForm = this.fb.group({
-      hasSaving: ['', Validators.required],
-    });
 
     //get the application data to fill the form on back or page load
     if ( this.useLocalStorage) {
@@ -64,9 +59,9 @@ export class TimeComponent implements OnInit {
 
   //set the value of form fields
   setFormFields(time: any): void {
-    this.timeForm.setValue({
-      hasSaving: time.hasSaving,
-    });
+    this.formData = {
+      ...time
+    };
   }
 
   //generic error function
@@ -76,10 +71,10 @@ export class TimeComponent implements OnInit {
   }
 
   //function called on form submit
-  onSubmit(): void {
+  onSubmit(timeForm:any): void {
     //create payload which need to be submit via API
     let payload = {
-      time: { ...this.timeForm.value },
+      time: { ...timeForm.value },
     };
 
     if (this.useLocalStorage) {
