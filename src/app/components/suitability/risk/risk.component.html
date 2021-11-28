@@ -4,40 +4,25 @@
   <form [formGroup]="riskForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="email">Email address</label>
-      <input
-        type="email"
-        class="form-control"
-        name="email"
-        id="email"
-        placeholder="name@example.com"
-        formControlName="email"
-      />
-      <div
-        *ngIf="getFormData.email.touched && getFormData.email.invalid"
-        class="form-text text-danger"
-      >
-      <!-- <div *ngIf="getFormData.email.errors.required"> This is required.</div>
-      <div *ngIf="getFormData.email.errors.email"> Please enter valid email.</div> -->
-      This is required.
+      <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com"
+        formControlName="email" />
+      <div *ngIf="riskForm.get('email')?.touched && riskForm.get('email')?.invalid" class="form-text text-danger">
+        <!-- <div *ngIf="riskForm.get('email')?.errors.required"> This is required.</div>
+      <div *ngIf="riskForm.get('email')?.errors.email"> Please enter valid email.</div> -->
+        This is required.
       </div>
     </div>
     <div class="form-group">
       <label for="investmentYears">Investment years</label>
-      <select
-        class="form-control"
-        id="investmentYears"
-        formControlName="investmentYears"
-      >
+      <select class="form-control" id="investmentYears" formControlName="investmentYears">
         <option>1</option>
         <option>2</option>
         <option>3</option>
         <option>4</option>
         <option>5</option>
       </select>
-      <div
-        *ngIf="getFormData.investmentYears.touched && getFormData.investmentYears.invalid"
-        class="form-text text-danger"
-      >
+      <div *ngIf="riskForm.get('investmentYears')?.touched && riskForm.get('investmentYears')?.invalid"
+        class="form-text text-danger">
         This is required.
       </div>
     </div>

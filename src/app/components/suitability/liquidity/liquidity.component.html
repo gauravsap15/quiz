@@ -2,59 +2,35 @@
     <h5 class="mb-4">{{title}}</h5>
     <h6 *ngIf="isError" class="form-text text-danger mb-4">{{errorMessage}}</h6>
     <form [formGroup]="liquidityForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input
-        type="text"
-        class="form-control"
-        name="firstName"
-        id="firstName"
-        placeholder="First Name"
-        formControlName="firstName"
-        />
-        <div
-        *ngIf="getFormData.firstName.touched && getFormData.firstName.invalid"
-        class="form-text text-danger"
-        >
-        This is required.
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First Name"
+                formControlName="firstName" />
+            <div *ngIf="liquidityForm.get('firstName')?.touched && liquidityForm.get('firstName')?.invalid"
+                class="form-text text-danger">
+                This is required.
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input
-        type="text"
-        class="form-control"
-        name="lastName"
-        id="lastName"
-        placeholder="Last Name"
-        formControlName="lastName"
-        />
-        <div
-        *ngIf="getFormData.lastName.touched && getFormData.lastName.invalid"
-        class="form-text text-danger"
-        >
-        This is required.
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last Name"
+                formControlName="lastName" />
+            <div *ngIf="liquidityForm.get('lastName')?.touched && liquidityForm.get('lastName')?.invalid"
+                class="form-text text-danger">
+                This is required.
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="liquidityAmount">liquidity Amount</label>
-        <input
-        type="text"
-        class="form-control"
-        name="liquidityAmount"
-        id="liquidityAmount"
-        placeholder="liquidity Amount"
-        formControlName="liquidityAmount"
-        />
-        <div
-        *ngIf="getFormData.liquidityAmount.touched && getFormData.liquidityAmount.invalid"
-        class="form-text text-danger"
-        >
-        This is required.
+        <div class="form-group">
+            <label for="liquidityAmount">liquidity Amount</label>
+            <input type="text" class="form-control" name="liquidityAmount" id="liquidityAmount"
+                placeholder="liquidity Amount" formControlName="liquidityAmount" />
+            <div *ngIf="liquidityForm.get('liquidityAmount')?.touched && liquidityForm.get('liquidityAmount')?.invalid"
+                class="form-text text-danger">
+                This is required.
+            </div>
         </div>
-    </div>
-    <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
-        <button class="btn btn-primary" type="submit" [disabled]="!liquidityForm.valid">Next</button>
-    </div>
+        <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+            <button class="btn btn-primary" type="submit" [disabled]="!liquidityForm.valid">Next</button>
+        </div>
     </form>
 </div>
